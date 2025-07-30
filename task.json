@@ -1,0 +1,32 @@
+// === tool.js (Termux CLI Tool) ===
+// Run with: node tool.js
+const fs = require("fs");
+const readline = require("readline");
+const path = require("path");
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+function ask(q) {
+  return new Promise(resolve => rl.question(q, resolve));
+}
+
+(async () => {
+  console.log("\n🧠 Facebook Auto Sender - Setup Tool\n------------------------------");
+  const cookiePath = await ask("🔑 Enter path to cookie file: ");
+  const messagePath = await ask("💬 Enter path to message file: ");
+  const prefix = await ask("🔘 Enter haters prefix (e.g., @loser): ");
+  const delay = await ask("⏱️ Delay between messages (in sec): ");
+  const chatId = await ask("🧵 Enter FB chat ID (e2ee): ");
+
+  const task = {
+    cookie: fs.readFileSync(cookiePath, "utf8").trim(),
+    messages: fs.readFileSync(messagePath, "utf8").trim().split("\n").filter(m => m),
+    prefix,
+    delay: parseInt(delay),
+    chatId
+  };
+
+  fs.writeFileSync("task.json", JSON.stringify(task, null, 2));
+  console.log("\n✅ Task saved to task.json. Upload to your Render app.\n");
+  rl.close();
+})();
