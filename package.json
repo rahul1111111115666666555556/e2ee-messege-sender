@@ -1,0 +1,13 @@
+{
+  "name": "fb-e2ee-sender",
+  "version": "1.0.0",
+  "description": "Facebook E2EE Message Sender on Render",
+  "main": "render-server.js",
+  "scripts": {
+    "start": "node render-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.3.8"
+  }
+}
